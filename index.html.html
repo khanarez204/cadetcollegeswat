@@ -29,7 +29,20 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background-color: #e0e0e0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
         
-        #app-container { width: 100%; max-width: 414px; height: 100vh; max-height: 896px; background-color: var(--bg-gray); position: relative; overflow-y: auto; overflow-x: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        #app-container { width: 100%; max-width: 414px; height: 100vh; max-height: 896px; background-color: var(--bg-gray); position: relative; overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+
+        /* Screens Layout */
+        #auth-screen, #home-screen, #results-screen, #profile-screen, #admin-dashboard, #admin-edit-screen, #complaint-form-screen, #routine-screen {
+            height: 100%;
+            overflow-y: auto; 
+            padding-bottom: 90px; 
+            -webkit-overflow-scrolling: touch;
+            position: absolute; top: 0; left: 0; width: 100%;
+            background: var(--bg-gray);
+            z-index: 10;
+        }
+        #auth-screen { z-index: 50; padding-bottom: 0; }
+
         .hidden { display: none !important; }
         .text-center { text-align: center; }
         .flex-center { display: flex; justify-content: center; align-items: center; }
@@ -37,24 +50,8 @@
 
         /* Header & Logo */
         .header-wave { position: relative; background: linear-gradient(180deg, #d1f2eb 0%, #ffffff 100%); padding-top: 40px; padding-bottom: 20px; border-bottom-left-radius: 50% 20px; border-bottom-right-radius: 50% 20px; text-align: center; }
-        
-        /* FIXED LOGO AREA STYLE */
-        .logo-area {
-            width: 120px; 
-            height: 120px; 
-            margin: 0 auto 10px; 
-            background: transparent; 
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .logo-area img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
+        .logo-area { width: 120px; height: 120px; margin: 0 auto 10px; background: transparent; border: none; display: flex; align-items: center; justify-content: center; }
+        .logo-area img { max-width: 100%; max-height: 100%; object-fit: contain; }
         .app-title { font-weight: 800; font-size: 1.2rem; color: var(--text-dark); text-transform: uppercase; letter-spacing: 1px; }
         .app-subtitle { font-size: 0.8rem; color: var(--text-dark); font-weight: 600; letter-spacing: 2px; margin-bottom: 5px; }
         .screen-title { font-size: 1.5rem; color: var(--primary-teal); font-weight: 700; margin: 10px 0; transition: color 0.3s; }
@@ -63,14 +60,12 @@
         .auth-form { padding: 20px 30px; }
         .input-group { margin-bottom: 15px; text-align: left; }
         .input-group label { display: block; font-size: 0.85rem; margin-bottom: 5px; color: var(--text-dark); font-weight: 500; }
-        .input-group input, .input-group textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; outline: none; transition: border 0.3s; }
+        .input-group input, .input-group textarea, .input-group select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; outline: none; transition: border 0.3s; }
         .input-group input:focus { border-color: var(--primary-teal); background-color: white; }
         .btn-primary { width: 100%; padding: 15px; border: none; border-radius: 10px; background-color: var(--primary-teal); color: white; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0, 0.1); margin-top: 10px; transition: background-color 0.3s; }
-        
         .social-login { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
         .social-btn { width: 40px; height: 40px; border-radius: 50%; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2rem; }
         .social-btn.google { color: #db4437; } .social-btn.fb { color: #4267B2; }
-        
         .admin-link { margin-top: 25px; font-size: 0.85rem; color: var(--text-light); cursor: pointer; text-decoration: underline; transition: color 0.3s; }
         .forgot-pass-link { display: block; text-align: right; font-size: 0.8rem; color: var(--text-light); margin-top: -10px; margin-bottom: 15px; cursor: pointer; }
 
@@ -84,36 +79,63 @@
         .cat-item { display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; }
         .cat-icon { width: 50px; height: 50px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--accent-red); box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 5px; }
         .cat-text { font-size: 0.65rem; font-weight: 600; color: var(--text-dark); }
-        .attendance-card { margin: 10px 20px 80px; background: white; border-radius: 15px; padding: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .attendance-card { margin: 10px 20px 20px; background: white; border-radius: 15px; padding: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
         .attendance-info { flex: 1; }
         .chart-container { width: 80px; height: 80px; position: relative; }
 
-        /* Profile & Result */
+        /* Routine */
+        .routine-container { padding: 10px 20px 80px; }
+        .routine-section { background: white; border-radius: 10px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 4px solid var(--primary-teal); }
+        .routine-header { font-weight: 700; color: var(--admin-dark); margin-bottom: 10px; font-size: 1rem; display:flex; align-items:center; }
+        .routine-header i { margin-right: 8px; color: var(--primary-teal); }
+        .routine-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; border-bottom: 1px solid #f4f4f4; padding-bottom: 5px; }
+        .routine-time { font-weight: 600; color: var(--accent-red); min-width: 90px; }
+        .routine-desc { color: var(--text-dark); text-align: right; flex: 1; }
+
+        /* Notices */
+        .notice-board { margin: 0 20px 20px; background: white; border-radius: 15px; padding: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .notice-item { display: flex; align-items: flex-start; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #f0f0f0; }
+        .notice-item:last-child { border-bottom: none; }
+        .notice-icon { min-width: 35px; height: 35px; background: #e8f6f3; color: var(--primary-teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 0.9rem; }
+        .notice-content h4 { font-size: 0.9rem; margin-bottom: 3px; color: var(--text-dark); }
+        .notice-content p { font-size: 0.75rem; color: #7f8c8d; }
+        .events-scroll { display: flex; overflow-x: auto; padding: 0 20px 20px; gap: 10px; scrollbar-width: none; }
+        .event-card { min-width: 140px; background: linear-gradient(135deg, #34495e, #2c3e50); border-radius: 12px; padding: 15px; color: white; text-align: center; flex-shrink: 0; }
+        .event-date { background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 5px; font-size: 0.7rem; display: inline-block; margin-bottom: 8px; }
+        .event-title { font-size: 0.85rem; font-weight: bold; }
+
+        /* Report & Profile */
+        .report-card-container { padding: 10px 15px; }
+        .report-section { background: white; border-radius: 10px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .report-header { font-weight: 700; color: var(--admin-dark); border-bottom: 2px solid #eee; padding-bottom: 5px; margin-bottom: 10px; font-size: 0.95rem; text-transform: uppercase; }
+        .report-sub-header { font-weight: 600; color: var(--accent-red); font-size: 0.85rem; margin-bottom: 5px; }
+        .custom-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; text-align: center; }
+        .custom-table th { background: #f0f3f4; padding: 8px; border: 1px solid #eee; font-weight: 600; }
+        .custom-table td { padding: 8px; border: 1px solid #eee; color: var(--text-dark); }
+        .custom-table td.left-align { text-align: left; }
+        .pet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.85rem; }
+        .pet-item { background: #f9f9f9; padding: 8px; border-radius: 5px; border: 1px solid #eee; }
+        .pet-item span { font-weight: bold; color: var(--primary-teal-dark); }
+        .text-block { font-size: 0.85rem; color: var(--text-dark); line-height: 1.4; background: #fdfdfd; padding: 8px; border: 1px solid #eee; border-radius: 5px; min-height: 40px; }
+        .pen-picture-box { margin-bottom: 10px; }
+        .pen-label { font-size: 0.75rem; color: var(--text-light); font-weight: bold; margin-bottom: 2px; }
         .red-header-card { background: linear-gradient(135deg, #e74c3c, #c0392b); margin: 20px; border-radius: 20px; padding: 20px; color: white; text-align: center; position: relative; box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4); }
         .profile-pic-container { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 80px; height: 80px; border-radius: 50%; border: 3px solid white; background: #eee; display: block; }
         .profile-pic-container img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
         .camera-btn { position: absolute; bottom: 0; right: 0; background: var(--text-dark); color: white; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; cursor: pointer; border: 2px solid white; z-index: 10; }
         .header-badges { display: flex; justify-content: center; gap: 10px; margin-top: 30px; }
         .badge { background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 8px; font-size: 0.7rem; display: flex; flex-direction: column; }
-        
-        .results-table { margin: 0 20px 80px; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); width: calc(100% - 40px); border-collapse: collapse; font-size: 0.8rem; }
-        .results-table th, .results-table td { padding: 10px; text-align: center; border-bottom: 1px solid #eee; }
-        .results-table th { background-color: #f0f3f4; color: var(--text-light); font-weight: 600; }
         .profile-list { margin: 0 20px 80px; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 10px 0; }
         .profile-item { display: flex; padding: 12px 20px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
         .profile-item:last-child { border-bottom: none; }
         .profile-label { width: 40%; color: var(--text-light); }
         .profile-value { width: 60%; font-weight: 600; color: var(--text-dark); }
 
-        /* Nav & Overlay */
-        .bottom-nav { position: absolute; bottom: 0; left: 0; width: 100%; height: 70px; background: white; display: flex; justify-content: space-around; align-items: center; border-top-left-radius: 25px; border-top-right-radius: 25px; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 100; }
+        /* Bottom Nav */
+        .bottom-nav { position: absolute; bottom: 0; left: 0; width: 100%; height: 70px; background: white; display: flex; justify-content: space-around; align-items: center; border-top-left-radius: 25px; border-top-right-radius: 25px; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; }
         .nav-item { font-size: 1.5rem; color: #bdc3c7; cursor: pointer; transition: color 0.3s; }
         .nav-item.active { color: var(--text-dark); position: relative; }
         .nav-item.active::after { content: ''; position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; background: var(--text-dark); border-radius: 50%; }
-        
-        #loading-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.8); z-index: 9999; display: flex; justify-content: center; align-items: center; }
-        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid var(--primary-teal); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
         /* Admin specific */
         .admin-header { background-color: var(--admin-dark); color: white; padding: 20px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
@@ -143,6 +165,12 @@
 
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; align-items: center; justify-content: center; }
         .modal-box { background: white; padding: 25px; border-radius: 15px; width: 85%; max-width: 320px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        #loading-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.8); z-index: 9999; display: flex; justify-content: center; align-items: center; }
+        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid var(--primary-teal); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        /* ENTRY FILTER STYLE */
+        #entry-filter { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; margin-top: 10px; background: white; color: var(--text-dark); font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -152,27 +180,12 @@
     <input type="file" id="file-upload" class="hidden" accept="image/*" onchange="handleImageUpload(this)">
     <input type="file" id="admin-file-upload" class="hidden" accept="image/*" onchange="handleAdminImageUpload(this)">
 
-    <div id="forgot-modal" class="modal-overlay hidden">
-        <div class="modal-box">
-            <h3 style="margin-bottom: 10px; color: var(--text-dark);">Reset Password</h3>
-            <p style="font-size: 0.8rem; color: #7f8c8d; margin-bottom: 15px;">Enter your email to receive a reset link.</p>
-            <input type="email" id="reset-email-input" placeholder="abc@gmail.com" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
-            <div style="display: flex; gap: 10px;">
-                <button onclick="hideForgotModal()" style="flex: 1; padding: 10px; border: none; background: #eee; border-radius: 8px; cursor: pointer;">Cancel</button>
-                <button onclick="sendPasswordReset()" style="flex: 1; padding: 10px; border: none; background: var(--primary-teal); color: white; border-radius: 8px; cursor: pointer;">Send</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Screen 1: Sign Up / Login -->
     <div id="auth-screen">
         <div class="header-wave">
-            <!-- FIXED LOGO AREA -->
             <div class="logo-area" style="width: 120px; height: 120px; border-radius: 0; border: none;">
-                <!-- YOUR LOGO LINK -->
                 <img src="https://i.ibb.co/fVxcQ0gp/Modern-Furniture-Banner-Landscape-2-removebg-preview.png" alt="College Logo" style="width: 100%; height: 100%; object-fit: contain;">
             </div>
-            
             <div class="app-title">Cadet College Swat</div>
             <div class="app-subtitle">I CAN I WILL</div>
             <div class="screen-title" id="auth-title">Sign up</div>
@@ -199,13 +212,9 @@
         <div class="dashboard-header">
             <div class="flex-center" style="justify-content: space-between;">
                 <i class="fas fa-bars" style="font-size: 1.2rem;"></i>
-                
-                <!-- FIXED LOGO IN DASHBOARD -->
                 <div class="logo-area" style="width: 60px; height: 60px; margin:0; border-radius: 0; border: none;">
-                     <!-- YOUR LOGO LINK -->
                      <img src="https://i.ibb.co/fVxcQ0gp/Modern-Furniture-Banner-Landscape-2-removebg-preview.png" alt="College Logo" style="width: 100%; height: 100%; object-fit: contain;">
                 </div>
-
                 <i class="fas fa-wifi" style="opacity:0;"></i>
             </div>
             <div class="app-title" style="font-size: 1rem; margin-top: 10px;">Cadet College Swat</div>
@@ -216,7 +225,7 @@
         <div class="section-title">Categories</div>
         <div class="categories-grid">
             <div class="cat-item"><div class="cat-icon"><i class="fas fa-book" style="color: #e67e22;"></i></div><div class="cat-text">Academics</div></div>
-            <div class="cat-item"><div class="cat-icon"><i class="fas fa-sun" style="color: #f1c40f;"></i></div><div class="cat-text">Daily Routine</div></div>
+            <div class="cat-item" onclick="openRoutineScreen()"><div class="cat-icon"><i class="fas fa-sun" style="color: #f1c40f;"></i></div><div class="cat-text">Daily Routine</div></div>
             <div class="cat-item"><div class="cat-icon"><i class="fas fa-file-invoice" style="color: #e74c3c;"></i></div><div class="cat-text">Fee Structure</div></div>
             <div class="cat-item" onclick="openComplaintScreen()"><div class="cat-icon"><i class="fas fa-exclamation-circle" style="color: #e74c3c;"></i></div><div class="cat-text">Complaints</div></div>
         </div>
@@ -230,38 +239,42 @@
             </div>
             <div class="chart-container"><canvas id="attendanceChart"></canvas></div>
         </div>
+
+        <!-- NOTICES -->
+        <div class="section-title" style="margin-top: 0;">Latest Notices</div>
+        <div class="notice-board">
+            <div class="notice-item"><div class="notice-icon"><i class="fas fa-bell"></i></div><div class="notice-content"><h4>Winter Vacation</h4><p>College will remain closed from 20th Dec to 10th Jan.</p></div></div>
+            <div class="notice-item"><div class="notice-icon"><i class="fas fa-file-alt"></i></div><div class="notice-content"><h4>Exam Schedule</h4><p>Monthly tests will start from next Monday.</p></div></div>
+        </div>
+
+        <!-- EVENTS -->
+        <div class="section-title">Upcoming Events</div>
+        <div class="events-scroll">
+            <div class="event-card"><div class="event-date">15 Aug</div><div class="event-title">Independence Day</div></div>
+            <div class="event-card" style="background: linear-gradient(135deg, #e74c3c, #c0392b);"><div class="event-date">25 Sep</div><div class="event-title">Sports Gala</div></div>
+            <div class="event-card" style="background: linear-gradient(135deg, #f1c40f, #f39c12);"><div class="event-date">10 Oct</div><div class="event-title">Parents Day</div></div>
+        </div>
     </div>
 
-    <!-- Screen 3: Result -->
+    <!-- Screen 3: SEMESTER ASSESSMENT REPORT -->
     <div id="results-screen" class="hidden">
-        <div class="red-header-card">
-            <div class="profile-pic-container"><img src="https://via.placeholder.com/150/2C3E50/FFFFFF?text=Cadet" id="res-profile-img" alt="Profile"></div>
-            <h2 id="res-name" style="margin-top: 30px;">Loading...</h2>
-            <div class="header-badges">
-                <div class="badge"><span>House</span><span id="res-house">...</span></div>
-                <div class="badge"><span>Class</span><span id="res-class">...</span></div>
-                <div class="badge"><span>Cadet No</span><span id="res-no">...</span></div>
-            </div>
+        <div class="dashboard-header" style="padding-bottom:10px;">
+            <div class="app-title" style="margin:0;">Semester Assessment - Cadet</div>
+            <div class="text-center" style="font-size:0.9rem; margin-top:5px; font-weight:bold;" id="res-cadet-info">Loading...</div>
         </div>
-        <div class="section-title text-center">Monthly Test Result</div>
-        <table class="results-table"><thead><tr><th>Subject</th><th>Total</th><th>Obt</th><th>%</th></tr></thead><tbody id="results-body"></tbody></table>
+        <div class="report-card-container">
+            <div class="report-section"><div class="report-header">Academic Results</div><table class="custom-table"><thead><tr><th class="left-align">Subject</th><th>M-1</th><th>M-2</th><th>Sem-1</th></tr></thead><tbody id="academic-table-body"></tbody></table><div class="text-block" style="margin-top:10px; font-style:italic;" id="res-academic-remarks">Remarks: ...</div></div>
+            <div class="report-section"><div class="report-header">Activities</div><div class="report-sub-header">Co-Curricular</div><div class="text-block" id="res-co-curr">...</div><div class="report-sub-header" style="margin-top:10px;">Extra-Curricular</div><div class="text-block" id="res-extra-curr">...</div></div>
+            <div class="report-section"><div class="report-header">PET</div><div class="pet-grid"><div class="pet-item">Mile: <span id="res-pet-mile">_</span></div><div class="pet-item">Pushups: <span id="res-pet-pushups">_</span></div><div class="pet-item">Chin ups: <span id="res-pet-chinups">_</span></div><div class="pet-item">Sit ups: <span id="res-pet-situps">_</span></div><div class="pet-item" style="grid-column: span 2;">Squats: <span id="res-pet-squats">_</span></div></div></div>
+            <div class="report-section"><div class="report-header">General Conduct</div><div class="report-sub-header">Discipline</div><div class="text-block" id="res-discipline">...</div><div class="report-sub-header" style="margin-top:10px;">Physical Appearance</div><div class="text-block" id="res-appearance">...</div></div>
+            <div class="report-section"><div class="report-header">Counselling</div><table class="custom-table"><thead><tr><th>Date</th><th>By</th><th>Remarks</th></tr></thead><tbody id="counselling-table-body"><tr><td colspan="3">No records</td></tr></tbody></table></div>
+            <div class="report-section"><div class="report-header">Pen Picture</div><div class="pen-picture-box"><div class="pen-label">By Mentor:</div><div class="text-block" id="res-pen-mentor">...</div></div><div class="pen-picture-box"><div class="pen-label">By Class Teacher:</div><div class="text-block" id="res-pen-teacher">...</div></div><div class="pen-picture-box"><div class="pen-label">By HM:</div><div class="text-block" id="res-pen-hm">...</div></div><div class="pen-picture-box"><div class="pen-label">Final Remarks:</div><div class="text-block" id="res-final-remarks" style="background:#fffbe6; border-color:#f1c40f;">...</div></div></div>
+        </div>
     </div>
 
     <!-- Screen 4: Profile -->
     <div id="profile-screen" class="hidden">
-        <div class="red-header-card">
-            <div class="profile-pic-container">
-                 <img src="https://via.placeholder.com/150/2C3E50/FFFFFF?text=Cadet" id="prof-profile-img" alt="Profile">
-                 <div class="camera-btn" onclick="triggerFileUpload()"><i class="fas fa-camera"></i></div>
-            </div>
-            <h2 id="prof-name" style="margin-top: 30px;">Loading...</h2>
-            <div class="header-badges">
-                <div class="badge"><span>House</span><span id="prof-house">...</span></div>
-                <div class="badge"><span>Class</span><span id="prof-class">...</span></div>
-                <div class="badge"><span>Cadet No</span><span id="prof-no">...</span></div>
-            </div>
-        </div>
-        <div class="section-title text-center" style="font-size: 1.2rem; text-transform: uppercase; margin-bottom: 15px;">Cadet Profile</div>
+        <div class="red-header-card"><div class="profile-pic-container"><img src="https://via.placeholder.com/150/2C3E50/FFFFFF?text=Cadet" id="prof-profile-img" alt="Profile"><div class="camera-btn" onclick="triggerFileUpload()"><i class="fas fa-camera"></i></div></div><h2 id="prof-name" style="margin-top: 30px;">Loading...</h2></div>
         <div class="profile-list">
             <div class="profile-item"><div class="profile-label">Name</div><div class="profile-value" id="list-name">...</div></div>
             <div class="profile-item"><div class="profile-label">Father name</div><div class="profile-value" id="list-fname">...</div></div>
@@ -269,97 +282,153 @@
             <div class="profile-item"><div class="profile-label">Section</div><div class="profile-value" id="list-section">...</div></div>
             <div class="profile-item"><div class="profile-label">Cadet NO</div><div class="profile-value" id="list-no">...</div></div>
             <div class="profile-item"><div class="profile-label">House</div><div class="profile-value" id="list-house">...</div></div>
+            <div class="profile-item"><div class="profile-label">Entry</div><div class="profile-value" id="list-entry">...</div></div>
             <div class="profile-item"><div class="profile-label">CNIC NO</div><div class="profile-value" id="list-cnic">...</div></div>
         </div>
-         <button onclick="logout()" style="width: 80%; margin: 0 auto 100px; display: block; padding: 12px; border: 1px solid #e74c3c; background: transparent; color: #e74c3c; border-radius: 8px; font-weight: bold;">Logout</button>
+        <button onclick="logout()" style="width: 80%; margin: 0 auto 100px; display: block; padding: 12px; border: 1px solid #e74c3c; background: transparent; color: #e74c3c; border-radius: 8px; font-weight: bold;">Logout</button>
     </div>
 
-    <!-- NEW Screen 7: COMPLAINT FORM SCREEN -->
+    <!-- ROUTINE -->
+    <div id="routine-screen" class="hidden">
+        <div class="header-wave" style="padding-top: 20px;">
+            <div style="text-align: left; padding: 0 20px; font-size: 1.2rem; color: var(--text-dark);"><i class="fas fa-arrow-left" onclick="switchScreen('home-screen', document.querySelector('.nav-item.active'))"></i></div>
+            <div class="app-title" style="margin-top: 10px;">Daily Routine</div>
+        </div>
+        <div class="routine-container">
+            <div class="routine-section" style="border-left-color: #f1c40f;"><div class="routine-header"><i class="fas fa-sun" style="color:#f1c40f;"></i> Morning Routine</div><div class="routine-item"><span class="routine-time">05:45 AM</span><span class="routine-desc">Wake Up</span></div><div class="routine-item"><span class="routine-time">05:45 - 06:15</span><span class="routine-desc">Fajar Prayer & Wash</span></div><div class="routine-item"><span class="routine-time">06:15 - 06:30</span><span class="routine-desc">Movement to Mess</span></div><div class="routine-item"><span class="routine-time">06:30 - 07:00</span><span class="routine-desc">Breakfast</span></div><div class="routine-item"><span class="routine-time">07:00 - 07:15</span><span class="routine-desc">Move to Academic Block</span></div><div class="routine-item"><span class="routine-time">07:15 AM</span><span class="routine-desc">Fall-in (Academic Block)</span></div></div>
+            <div class="routine-section" style="border-left-color: #3498db;"><div class="routine-header"><i class="fas fa-book" style="color:#3498db;"></i> Academic Session</div><div class="routine-item"><span class="routine-time">07:30 - 01:55</span><span class="routine-desc">Classes</span></div></div>
+            <div class="routine-section" style="border-left-color: #e67e22;"><div class="routine-header"><i class="fas fa-utensils" style="color:#e67e22;"></i> Afternoon Routine</div><div class="routine-item"><span class="routine-time">01:55 - 02:05</span><span class="routine-desc">Return to Houses</span></div><div class="routine-item"><span class="routine-time">02:05 - 02:30</span><span class="routine-desc">Lunch (Mess)</span></div><div class="routine-item"><span class="routine-time">02:30 - 02:45</span><span class="routine-desc">Zuhur Prayer</span></div><div class="routine-item"><span class="routine-time">02:45 - 03:00</span><span class="routine-desc">Rest & Change</span></div><div class="routine-item"><span class="routine-time">03:00 PM</span><span class="routine-desc">Sports Fall-in</span></div><div class="routine-item"><span class="routine-time">03:00 - 04:00</span><span class="routine-desc">Sports / Games</span></div></div>
+            <div class="routine-section" style="border-left-color: #9b59b6;"><div class="routine-header"><i class="fas fa-cloud-moon" style="color:#9b59b6;"></i> Evening Routine</div><div class="routine-item"><span class="routine-time">04:00 - 05:00</span><span class="routine-desc">Free Time</span></div><div class="routine-item"><span class="routine-time">05:00 - 05:30</span><span class="routine-desc">Wudu & Prep</span></div><div class="routine-item"><span class="routine-time">05:30 - 05:50</span><span class="routine-desc">Maghrib Prayer</span></div><div class="routine-item"><span class="routine-time">05:50 - 06:00</span><span class="routine-desc">Move to Study Area</span></div></div>
+            <div class="routine-section" style="border-left-color: #2c3e50;"><div class="routine-header"><i class="fas fa-moon" style="color:#2c3e50;"></i> Night & Study</div><div class="routine-item"><span class="routine-time">06:00 - 07:15</span><span class="routine-desc">1st Prep</span></div><div class="routine-item"><span class="routine-time">07:15 - 07:30</span><span class="routine-desc">Break</span></div><div class="routine-item"><span class="routine-time">07:30 - 07:50</span><span class="routine-desc">Isha Prayer</span></div><div class="routine-item"><span class="routine-time">08:00 - 08:30</span><span class="routine-desc">Dinner</span></div><div class="routine-item"><span class="routine-time">08:30 - 09:00</span><span class="routine-desc">Break</span></div><div class="routine-item"><span class="routine-time">09:00 - 10:30</span><span class="routine-desc">2nd Prep</span></div><div class="routine-item"><span class="routine-time">10:30 - 11:00</span><span class="routine-desc">Pre-sleep</span></div><div class="routine-item"><span class="routine-time">11:00 PM</span><span class="routine-desc">Lights Out</span></div></div>
+        </div>
+    </div>
+
+    <!-- COMPLAINT FORM -->
     <div id="complaint-form-screen" class="hidden">
         <div class="header-wave" style="padding-top: 20px;">
-            <div style="text-align: left; padding: 0 20px; font-size: 1.2rem; color: var(--text-dark);">
-                <i class="fas fa-arrow-left" onclick="switchScreen('home-screen', document.querySelector('.nav-item.active'))"></i>
-            </div>
+            <div style="text-align: left; padding: 0 20px; font-size: 1.2rem; color: var(--text-dark);"><i class="fas fa-arrow-left" onclick="switchScreen('home-screen', document.querySelector('.nav-item.active'))"></i></div>
             <div class="app-title" style="margin-top: 10px;">Complaint Center</div>
-            <div class="app-subtitle">We are here to help</div>
         </div>
         <div class="auth-form" style="margin-top: 20px;">
-            <div class="input-group">
-                <label>Your Complaint / Issue</label>
-                <textarea id="complaint-text" rows="8" placeholder="Please describe your issue here..." style="resize: none;"></textarea>
-            </div>
+            <div class="input-group"><label>Your Complaint</label><textarea id="complaint-text" rows="8" placeholder="Please describe your issue here..." style="resize: none;"></textarea></div>
             <button onclick="submitComplaint()" class="btn-primary" style="background-color: var(--accent-red);">Submit Complaint</button>
         </div>
     </div>
 
-    <!-- Screen 5: ADMIN DASHBOARD -->
+    <!-- ADMIN DASHBOARD -->
     <div id="admin-dashboard" class="hidden">
         <div class="admin-header">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <h2 style="font-size: 1.2rem;">Admin Panel</h2>
-                <button onclick="logout()" style="background:transparent; border:none; color:white; font-size:0.9rem;">Logout <i class="fas fa-sign-out-alt"></i></button>
+                <h2>Admin Panel</h2><button onclick="logout()" style="background:transparent; border:none; color:white;">Logout</button>
             </div>
-            <div class="admin-tabs">
-                <div class="admin-tab active" id="tab-students" onclick="switchAdminTab('students')">Students</div>
-                <div class="admin-tab" id="tab-complaints" onclick="switchAdminTab('complaints')">Complaints</div>
-            </div>
-            <div class="search-bar" id="admin-search-box" style="margin-top: 15px;">
-                <input type="text" id="admin-search" placeholder="Search Cadet No or Name..." onkeyup="filterStudents()">
-                <i class="fas fa-search"></i>
-            </div>
+            <!-- ENTRY FILTER ADDED HERE -->
+            <select id="entry-filter" onchange="filterStudents()">
+                <option value="All">All Entries</option>
+                <option value="14">14th Entry</option>
+                <option value="15">15th Entry</option>
+                <option value="16">16th Entry</option>
+                <option value="17">17th Entry</option>
+                <option value="18">18th Entry</option>
+            </select>
+            <div class="admin-tabs"><div class="admin-tab active" id="tab-students" onclick="switchAdminTab('students')">Students</div><div class="admin-tab" id="tab-complaints" onclick="switchAdminTab('complaints')">Complaints</div></div>
+            <div class="search-bar" id="admin-search-box" style="margin-top: 15px;"><input type="text" id="admin-search" placeholder="Search..." onkeyup="filterStudents()"><i class="fas fa-search"></i></div>
         </div>
-        <div id="student-list-container" class="student-list-container">
-            <div class="section-title">Registered Cadets</div>
-            <div id="student-list"><p class="text-center" style="color:#aaa; margin-top:20px;">Loading data...</p></div>
-        </div>
-        <div id="complaint-list-container" class="student-list-container hidden">
-            <div class="section-title">Student Complaints</div>
-            <div id="complaint-list"><p class="text-center" style="color:#aaa; margin-top:20px;">Loading complaints...</p></div>
-        </div>
+        <div id="student-list-container" class="student-list-container"><div class="section-title">Registered Cadets</div><div id="student-list"><p class="text-center" style="color:#aaa; margin-top:20px;">Loading...</p></div></div>
+        <div id="complaint-list-container" class="student-list-container hidden"><div class="section-title">Complaints</div><div id="complaint-list"><p class="text-center" style="color:#aaa; margin-top:20px;">Loading...</p></div></div>
     </div>
 
-    <!-- Screen 6: ADMIN EDIT STUDENT -->
+    <!-- ADMIN EDIT SCREEN (UPDATED with Profile Inputs) -->
     <div id="admin-edit-screen" class="hidden" style="background: var(--bg-gray); min-height: 100vh;">
         <div class="admin-header" style="display: flex; align-items: center; gap: 15px;">
             <i class="fas fa-arrow-left" onclick="closeEditScreen()" style="cursor:pointer;"></i>
-            <h2 style="font-size: 1.1rem;" id="edit-header-name">Edit Student</h2>
+            <h2 style="font-size: 1.1rem;" id="edit-header-name">Edit Report</h2>
         </div>
         <input type="hidden" id="edit-uid">
-        <div style="text-align: center; margin-top: 20px;">
-            <div class="admin-edit-pic-container">
-                <img id="admin-edit-img-preview" src="">
-                <div class="admin-cam-btn" onclick="triggerAdminFileUpload()"><i class="fas fa-camera"></i></div>
-            </div>
-            <p style="font-size: 0.8rem; color: #7f8c8d;">Tap camera to change photo</p>
-        </div>
+        
+        <!-- NEW: Profile Edit Section -->
         <div class="edit-section">
-            <div class="edit-title">Bio Data</div>
-            <div class="input-group" style="margin-bottom: 10px;"><label style="font-size:0.8rem;">Name</label><input type="text" id="edit-name" style="padding:8px;"></div>
-             <div class="small-inputs-row"><div><label style="font-size: 0.75rem;">Cadet No</label><input type="text" id="edit-cadet-no"></div><div><label style="font-size: 0.75rem;">Class</label><input type="text" id="edit-class"></div></div>
+            <div class="edit-title">Profile Details</div>
+            <div class="admin-edit-pic-container"><img id="admin-edit-img-preview" src=""><div class="admin-cam-btn" onclick="triggerAdminFileUpload()"><i class="fas fa-camera"></i></div></div>
+            <div class="input-group"><label>Name</label><input type="text" id="edit-name"></div>
+            <div class="input-group"><label>Father Name</label><input type="text" id="edit-fname"></div>
+            <div class="small-inputs-row"><input type="text" id="edit-cadet-no" placeholder="Cadet No"><input type="text" id="edit-class" placeholder="Class"></div>
+            <div class="small-inputs-row"><input type="text" id="edit-section" placeholder="Section"><input type="text" id="edit-house" placeholder="House"></div>
+            <!-- ENTRY INPUT -->
+            <div class="input-group"><label>Entry (e.g. 17)</label><input type="text" id="edit-entry" placeholder="Enter Entry Number"></div>
         </div>
+
+        <!-- Academic Inputs -->
+        <div class="edit-section">
+            <div class="edit-title">Academics (Marks)</div>
+            <div class="small-inputs-row"><input type="text" value="English" disabled><input type="number" id="mk-eng-m1" placeholder="M1"><input type="number" id="mk-eng-m2" placeholder="M2"><input type="number" id="mk-eng-s1" placeholder="S1"></div>
+            <div class="small-inputs-row"><input type="text" value="Urdu" disabled><input type="number" id="mk-urdu-m1" placeholder="M1"><input type="number" id="mk-urdu-m2" placeholder="M2"><input type="number" id="mk-urdu-s1" placeholder="S1"></div>
+            <div class="small-inputs-row"><input type="text" value="Maths" disabled><input type="number" id="mk-math-m1" placeholder="M1"><input type="number" id="mk-math-m2" placeholder="M2"><input type="number" id="mk-math-s1" placeholder="S1"></div>
+            <div class="small-inputs-row"><input type="text" value="Science" disabled><input type="number" id="mk-sci-m1" placeholder="M1"><input type="number" id="mk-sci-m2" placeholder="M2"><input type="number" id="mk-sci-s1" placeholder="S1"></div>
+            <div class="input-group"><label>Academic Remarks</label><input type="text" id="edit-ac-remarks"></div>
+        </div>
+
+        <!-- PET Inputs -->
+        <div class="edit-section">
+            <div class="edit-title">PET Results</div>
+            <div class="small-inputs-row"><input type="text" id="edit-pet-mile" placeholder="Mile"><input type="text" id="edit-pet-pushups" placeholder="Pushups"></div>
+            <div class="small-inputs-row"><input type="text" id="edit-pet-chinups" placeholder="Chin ups"><input type="text" id="edit-pet-situps" placeholder="Sit ups"></div>
+            <div class="input-group"><input type="text" id="edit-pet-squats" placeholder="Squats"></div>
+        </div>
+
+        <!-- Activities -->
+        <div class="edit-section">
+            <div class="edit-title">Activities & Discipline</div>
+            <div class="input-group"><label>Co-Curricular</label><input type="text" id="edit-co-curr"></div>
+            <div class="input-group"><label>Extra-Curricular</label><input type="text" id="edit-extra-curr"></div>
+            <div class="input-group"><label>Discipline</label><input type="text" id="edit-discipline"></div>
+            <div class="input-group"><label>Physical Appearance</label><input type="text" id="edit-appearance"></div>
+        </div>
+
+        <!-- Counselling -->
+        <div class="edit-section">
+            <div class="edit-title">Counselling Record</div>
+            <div class="small-inputs-row"><input type="text" id="coun-d1" placeholder="Date"><input type="text" id="coun-b1" placeholder="By"><input type="text" id="coun-r1" placeholder="Remarks"></div>
+            <div class="small-inputs-row"><input type="text" id="coun-d2" placeholder="Date"><input type="text" id="coun-b2" placeholder="By"><input type="text" id="coun-r2" placeholder="Remarks"></div>
+            <div class="small-inputs-row"><input type="text" id="coun-d3" placeholder="Date"><input type="text" id="coun-b3" placeholder="By"><input type="text" id="coun-r3" placeholder="Remarks"></div>
+        </div>
+
+        <!-- Pen Pictures -->
+        <div class="edit-section">
+            <div class="edit-title">Pen Pictures</div>
+            <div class="input-group"><label>By Mentor</label><textarea id="edit-pen-mentor" rows="2"></textarea></div>
+            <div class="input-group"><label>By Class Teacher</label><textarea id="edit-pen-teacher" rows="2"></textarea></div>
+            <div class="input-group"><label>By HM</label><textarea id="edit-pen-hm" rows="2"></textarea></div>
+            <div class="input-group"><label>Final Remarks</label><textarea id="edit-final-remarks" rows="2"></textarea></div>
+        </div>
+
+        <!-- Attendance -->
         <div class="edit-section">
             <div class="edit-title">Attendance</div>
-            <div class="small-inputs-row"><div><label style="font-size: 0.75rem;">Present Days</label><input type="number" id="edit-present"></div><div><label style="font-size: 0.75rem;">Absent Days</label><input type="number" id="edit-absent"></div></div>
+            <div class="small-inputs-row"><div><label style="font-size: 0.75rem;">Present</label><input type="number" id="edit-present"></div><div><label style="font-size: 0.75rem;">Absent</label><input type="number" id="edit-absent"></div></div>
         </div>
-        <div class="edit-section">
-            <div class="edit-title">Exam Marks (Obtained)</div>
-            <div class="small-inputs-row"><input type="text" value="English" disabled style="background:#f0f0f0;"><input type="number" id="mark-eng" placeholder="Marks"></div>
-            <div class="small-inputs-row"><input type="text" value="Urdu" disabled style="background:#f0f0f0;"><input type="number" id="mark-urdu" placeholder="Marks"></div>
-            <div class="small-inputs-row"><input type="text" value="Maths" disabled style="background:#f0f0f0;"><input type="number" id="mark-math" placeholder="Marks"></div>
-            <div class="small-inputs-row"><input type="text" value="Science" disabled style="background:#f0f0f0;"><input type="number" id="mark-sci" placeholder="Marks"></div>
-        </div>
+
         <button onclick="saveStudentData()" class="btn-primary" style="width: 90%; margin: 10px auto 40px; display: block; background: var(--admin-dark);">Save All Changes</button>
     </div>
 
-    <!-- Bottom Navigation -->
+    <div id="forgot-modal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h3>Reset Password</h3><input type="email" id="reset-email-input" placeholder="Email"><br><br>
+            <button onclick="hideForgotModal()">Cancel</button> <button onclick="sendPasswordReset()">Send</button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation (Hidden on Auth) -->
     <div id="bottom-nav" class="bottom-nav hidden">
         <div class="nav-item active" onclick="switchScreen('home-screen', this)"><i class="fas fa-home"></i></div>
-        <div class="nav-item" onclick="switchScreen('results-screen', this)"><i class="fas fa-bell"></i></div>
+        <div class="nav-item" onclick="switchScreen('results-screen', this)"><i class="fas fa-file-alt"></i></div>
         <div class="nav-item" onclick="switchScreen('profile-screen', this)"><i class="fas fa-user"></i></div>
     </div>
 </div>
 
 <script>
+    // --- GLOBAL VARIABLE (Must be first) ---
+    let attendanceChartInstance = null;
+
     const ALLOWED_ADMIN_EMAIL = "adminccs@gmail.com";
     const firebaseConfig = {
       apiKey: "AIzaSyDk7FnXobMygc1Ub5dTasrhZaFB4VDw8nk",
@@ -377,90 +446,48 @@
         firebase.initializeApp(firebaseConfig);
         auth = firebase.auth();
         db = firebase.database();
-    } catch (e) { console.error("Firebase init failed.", e); }
+    } catch (e) { console.error(e); }
 
     let isSignup = true, isAdminMode = false, allStudents = [], currentUserData = null;
     const defaultProfileImg = "https://via.placeholder.com/150/2C3E50/FFFFFF?text=Cadet";
     let currentEditingImageBase64 = "";
 
-    const authScreen = document.getElementById('auth-screen'), signupFields = document.getElementById('signup-fields'), authTitle = document.getElementById('auth-title'), authBtn = document.getElementById('auth-btn'), toggleText = document.getElementById('toggle-auth-text'), loadingOverlay = document.getElementById('loading-overlay'), bottomNav = document.getElementById('bottom-nav'), adminToggleBtn = document.getElementById('admin-toggle-btn'), forgotLinkUi = document.getElementById('forgot-link-ui');
-    let attendanceChartInstance = null;
+    const authScreen = document.getElementById('auth-screen'), bottomNav = document.getElementById('bottom-nav');
+    const loadingOverlay = document.getElementById('loading-overlay');
 
-    // --- FIX: LOGOUT FUNCTION WITH PROMISE ---
-    function logout() {
-        if(auth) {
-            loadingOverlay.classList.remove('hidden');
-            auth.signOut().then(() => {
-                window.location.reload();
-            }).catch((error) => {
-                alert("Logout Error: " + error.message);
-                loadingOverlay.classList.add('hidden');
-            });
-        } else {
-            window.location.reload();
-        }
-    }
-
-    function showForgotModal() { document.getElementById('forgot-modal').classList.remove('hidden'); }
-    function hideForgotModal() { document.getElementById('forgot-modal').classList.add('hidden'); }
-    function sendPasswordReset() {
-        const email = document.getElementById('reset-email-input').value;
-        if (!email) return alert("Enter email.");
-        loadingOverlay.classList.remove('hidden');
-        auth.sendPasswordResetEmail(email).then(() => { loadingOverlay.classList.add('hidden'); hideForgotModal(); alert("Link sent!"); }).catch(e => { loadingOverlay.classList.add('hidden'); alert(e.message); });
-    }
-
-    function openComplaintScreen() { switchScreen('complaint-form-screen', null); }
-    function submitComplaint() {
-        const text = document.getElementById('complaint-text').value;
-        if(!text.trim()) return alert("Write a complaint.");
-        const cData = { userId: auth.currentUser.uid, name: currentUserData.name, cadetNo: currentUserData.cadetNo, class: currentUserData.class, text: text, timestamp: new Date().toISOString() };
-        loadingOverlay.classList.remove('hidden');
-        db.ref('complaints').push(cData).then(() => { loadingOverlay.classList.add('hidden'); alert("Submitted!"); document.getElementById('complaint-text').value=""; switchScreen('home-screen', document.querySelector('.nav-item.active')); });
-    }
-
-    function switchAdminTab(tab) {
-        document.getElementById('tab-students').classList.remove('active'); document.getElementById('tab-complaints').classList.remove('active');
-        document.getElementById('student-list-container').classList.add('hidden'); document.getElementById('complaint-list-container').classList.add('hidden');
-        document.getElementById('admin-search-box').classList.add('hidden');
-        if(tab === 'students') { document.getElementById('tab-students').classList.add('active'); document.getElementById('student-list-container').classList.remove('hidden'); document.getElementById('admin-search-box').classList.remove('hidden'); }
-        else { document.getElementById('tab-complaints').classList.add('active'); document.getElementById('complaint-list-container').classList.remove('hidden'); loadComplaints(); }
-    }
-
-    function loadComplaints() {
-        db.ref('complaints').once('value').then(snap => {
-            const d = snap.val(); const l = document.getElementById('complaint-list'); l.innerHTML = '';
-            if(d) Object.keys(d).forEach(k => {
-                const c = d[k]; l.innerHTML += `<div class="complaint-card"><div class="comp-header"><span class="comp-name">${c.name} (${c.cadetNo})</span><span style="font-size:0.7rem;">${new Date(c.timestamp).toLocaleDateString()}</span></div><div class="comp-text">${c.text}</div><button class="resolve-btn" onclick="resolveComplaint('${k}')">Resolve</button></div>`;
-            }); else l.innerHTML = '<p class="text-center" style="margin-top:20px; color:#aaa;">No complaints.</p>';
-        });
-    }
-    function resolveComplaint(id) { if(confirm("Delete complaint?")) { db.ref('complaints/'+id).remove(); loadComplaints(); } }
-
-    function triggerFileUpload() { document.getElementById('file-upload').click(); }
-    function triggerAdminFileUpload() { document.getElementById('admin-file-upload').click(); }
-    function handleImageUpload(i) { if(i.files[0]){ if(i.files[0].size>500*1024) return alert("Max 500KB"); const r=new FileReader(); r.onload=e=>{ db.ref('users/'+auth.currentUser.uid).update({profilePic:e.target.result}).then(()=>{updateProfileImages(e.target.result);alert("Updated!");}); }; r.readAsDataURL(i.files[0]); } }
-    function handleAdminImageUpload(i) { if(i.files[0]){ if(i.files[0].size>500*1024) return alert("Max 500KB"); const r=new FileReader(); r.onload=e=>{ currentEditingImageBase64=e.target.result; document.getElementById('admin-edit-img-preview').src=e.target.result; }; r.readAsDataURL(i.files[0]); } }
-    function updateProfileImages(s) { const u=s||defaultProfileImg; document.getElementById('prof-profile-img').src=u; document.getElementById('res-profile-img').src=u; }
-
+    // Toggle logic
     function toggleAuthMode() { if(isAdminMode)return; isSignup=!isSignup; updateAuthUI(); }
     function toggleAdminMode() { isAdminMode=!isAdminMode; isSignup=!isAdminMode; updateAuthUI(); }
     function updateAuthUI() {
-        if(isAdminMode) { authTitle.innerText="Admin Login"; authBtn.innerText="Access Dashboard"; signupFields.classList.add('hidden'); toggleText.classList.add('hidden'); forgotLinkUi.classList.add('hidden'); adminToggleBtn.innerHTML='<i class="fas fa-user-graduate"></i> Student Login'; authBtn.style.backgroundColor="var(--admin-dark)"; authTitle.style.color="var(--admin-dark)"; }
+        const title=document.getElementById('auth-title'), btn=document.getElementById('auth-btn'), fields=document.getElementById('signup-fields'), toggle=document.getElementById('toggle-auth-text'), link=document.getElementById('forgot-link-ui'), adminBtn=document.getElementById('admin-toggle-btn');
+        if(isAdminMode) { title.innerText="Admin Login"; btn.innerText="Access Dashboard"; fields.classList.add('hidden'); toggle.classList.add('hidden'); link.classList.add('hidden'); adminBtn.innerHTML='Student Login'; btn.style.backgroundColor="var(--admin-dark)"; title.style.color="var(--admin-dark)"; }
         else {
-            adminToggleBtn.innerHTML='<i class="fas fa-user-shield"></i> Admin Login'; authBtn.style.backgroundColor=isSignup?"var(--primary-teal)":"var(--accent-red)"; authTitle.style.color=isSignup?"var(--primary-teal)":"var(--accent-red)";
-            if(isSignup) { signupFields.classList.remove('hidden'); forgotLinkUi.classList.add('hidden'); authTitle.innerText="Sign up"; authBtn.innerText="Sign Up"; toggleText.innerHTML='Already have account? <a href="#" onclick="toggleAuthMode()">Login</a>'; }
-            else { signupFields.classList.add('hidden'); forgotLinkUi.classList.remove('hidden'); authTitle.innerText="Login"; authBtn.innerText="Login"; toggleText.innerHTML='No account? <a href="#" onclick="toggleAuthMode()">Sign Up</a>'; }
+            adminBtn.innerHTML='Admin Login'; btn.style.backgroundColor=isSignup?"var(--primary-teal)":"var(--accent-red)"; title.style.color=isSignup?"var(--primary-teal)":"var(--accent-red)";
+            if(isSignup) { fields.classList.remove('hidden'); link.classList.add('hidden'); title.innerText="Sign up"; btn.innerText="Sign Up"; toggle.innerHTML='Have account? <a href="#" onclick="toggleAuthMode()">Login</a>'; }
+            else { fields.classList.add('hidden'); link.classList.remove('hidden'); title.innerText="Login"; btn.innerText="Login"; toggle.innerHTML='No account? <a href="#" onclick="toggleAuthMode()">Sign Up</a>'; }
         }
     }
 
     function switchScreen(id, el) {
-        ['home-screen','results-screen','profile-screen','admin-dashboard','admin-edit-screen','complaint-form-screen'].forEach(i=>document.getElementById(i).classList.add('hidden'));
+        ['home-screen','results-screen','profile-screen','admin-dashboard','admin-edit-screen','complaint-form-screen','routine-screen','auth-screen'].forEach(i=>document.getElementById(i).classList.add('hidden'));
         document.getElementById(id).classList.remove('hidden');
-        if(id!=='complaint-form-screen'){ document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active')); if(el)el.classList.add('active'); }
+        
+        // Handle Bottom Nav Visibility
+        if(id === 'auth-screen') {
+            bottomNav.classList.add('hidden');
+        } else if(['home-screen','results-screen','profile-screen'].includes(id)) {
+            bottomNav.classList.remove('hidden');
+        } else {
+            bottomNav.classList.add('hidden');
+        }
+
+        if(id!=='complaint-form-screen' && id!=='routine-screen' && id!=='auth-screen' && id!=='admin-dashboard' && id!=='admin-edit-screen'){ document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active')); if(el)el.classList.add('active'); }
         if(id==='home-screen') initChart();
     }
 
+    function logout() { auth.signOut().then(()=>location.reload()); }
+    
+    // Auth & Data Loading
     document.getElementById('auth-form').addEventListener('submit', async e => {
         e.preventDefault(); const em=document.getElementById('input-email').value, pw=document.getElementById('input-password').value; loadingOverlay.classList.remove('hidden');
         try {
@@ -471,7 +498,7 @@
             } else {
                 if(isSignup) {
                     const u = await auth.createUserWithEmailAndPassword(em, pw);
-                    const d = { name:document.getElementById('input-name').value, cadetNo:document.getElementById('input-cadet').value, class:document.getElementById('input-class').value, email:em, attendance:{present:0,absent:0}, marks:[] };
+                    const d = { name:document.getElementById('input-name').value, cadetNo:document.getElementById('input-cadet').value, class:document.getElementById('input-class').value, email:em, fatherName:"", house:"", section:"", attendance:{present:0,absent:0}, marks:[] };
                     await db.ref('users/'+u.user.uid).set(d); loadUserData(d);
                 } else {
                     const u = await auth.signInWithEmailAndPassword(em, pw);
@@ -482,39 +509,163 @@
         } catch(err) { alert(err.message); loadingOverlay.classList.add('hidden'); }
     });
 
-    function loadUserData(d) { currentUserData=d; updateProfileUI(d); updateResultsUI(d); updateAttendanceUI(d); updateProfileImages(d.profilePic); loadingOverlay.classList.add('hidden'); authScreen.classList.add('hidden'); bottomNav.classList.remove('hidden'); switchScreen('home-screen', document.querySelector('.nav-item.active')); }
-    function updateProfileUI(d) { ['res','prof'].forEach(p=>{ setText(p+'-name',d.name); setText(p+'-house',d.house||'N/A'); setText(p+'-class',d.class); setText(p+'-no',d.cadetNo); }); setText('list-name',d.name); setText('list-fname',d.fatherName||'N/A'); setText('list-class',d.class); setText('list-section',d.section||'N/A'); setText('list-no',d.cadetNo); setText('list-house',d.house||'N/A'); setText('list-cnic',d.cnic||'N/A'); }
-    function updateResultsUI(d) { const b=document.getElementById('results-body'); b.innerHTML=''; if(d.marks) d.marks.forEach(m=>{ b.innerHTML+=`<tr><td>${m.subject}</td><td>${m.marks}</td><td>${m.achieved}</td><td>${m.perc}%</td></tr>`; }); else b.innerHTML='<tr><td colspan="4">No results</td></tr>'; }
-    function updateAttendanceUI(d) { const p=d.attendance?parseInt(d.attendance.present):0, a=d.attendance?parseInt(d.attendance.absent):0; setText('val-total',p); setText('val-absent',a); initChart(p,a); }
-    function setText(i,v) { const e=document.getElementById(i); if(e)e.innerText=v; }
-    function initChart(p,a) { const ctx=document.getElementById('attendanceChart').getContext('2d'); if(attendanceChartInstance) attendanceChartInstance.destroy(); attendanceChartInstance=new Chart(ctx,{type:'doughnut',data:{labels:['P','A'],datasets:[{data:[p||1,a],backgroundColor:[p?'#2ecc71':'#eee','#e74c3c'],borderWidth:0}]},options:{cutout:'75%',plugins:{legend:false,tooltip:false},responsive:true,maintainAspectRatio:false}}); }
+    function loadUserData(d) { 
+        if(!d) return; currentUserData=d;
+        // Map fields
+        ['res','prof','list'].forEach(p=>{ 
+            const el = document.getElementById(p==='list'?'list-name':(p+'-name')); if(el) el.innerText = d.name;
+        });
+        document.getElementById('list-fname').innerText = d.fatherName || "N/A";
+        document.getElementById('list-house').innerText = d.house || "N/A";
+        document.getElementById('list-entry').innerText = (d.entry ? d.entry + 'th Entry' : "N/A");
+        document.getElementById('list-section').innerText = d.section || "N/A";
+        document.getElementById('prof-profile-img').src = d.profilePic || defaultProfileImg;
+        document.getElementById('res-cadet-info').innerText = `${d.name} (${d.cadetNo})`;
 
+        // Academics Table
+        const ac = d.academics || {}; const subList = ['english','urdu','math','science']; let rows = '';
+        subList.forEach(s => { const m = ac[s] || {}; rows += `<tr><td class="left-align" style="text-transform:capitalize;">${s}</td><td>${m.m1||'-'}</td><td>${m.m2||'-'}</td><td>${m.s1||'-'}</td></tr>`; });
+        document.getElementById('academic-table-body').innerHTML = rows; document.getElementById('res-academic-remarks').innerText = "Remarks: " + (ac.remarks || "No remarks");
+        
+        // PET & Others
+        const pet = d.pet || {}; document.getElementById('res-pet-mile').innerText = pet.mile || "_"; document.getElementById('res-pet-pushups').innerText = pet.pushups || "_"; document.getElementById('res-pet-chinups').innerText = pet.chinups || "_"; document.getElementById('res-pet-situps').innerText = pet.situps || "_"; document.getElementById('res-pet-squats').innerText = pet.squats || "_";
+        const act = d.activities || {}; document.getElementById('res-co-curr').innerText = act.co || "-"; document.getElementById('res-extra-curr').innerText = act.extra || "-";
+        const con = d.conduct || {}; document.getElementById('res-discipline').innerText = con.discipline || "-"; document.getElementById('res-appearance').innerText = con.appearance || "-";
+        
+        // Counselling
+        const coun = d.counselling || []; let cRows = ''; if(coun.length > 0) coun.forEach(c => cRows += `<tr><td>${c.date}</td><td>${c.by}</td><td>${c.remarks}</td></tr>`); else cRows = '<tr><td colspan="3">No records</td></tr>'; document.getElementById('counselling-table-body').innerHTML = cRows;
+        
+        // Pen
+        const pen = d.pen || {}; document.getElementById('res-pen-mentor').innerText = pen.mentor || "-"; document.getElementById('res-pen-teacher').innerText = pen.teacher || "-"; document.getElementById('res-pen-hm').innerText = pen.hm || "-"; document.getElementById('res-final-remarks').innerText = pen.final || "-";
+
+        // Attendance
+        const p=d.attendance?parseInt(d.attendance.present):0, a=d.attendance?parseInt(d.attendance.absent):0; 
+        if(document.getElementById('val-total')) { document.getElementById('val-total').innerText = p; document.getElementById('val-absent').innerText = a; initChart(p,a); }
+
+        loadingOverlay.classList.add('hidden'); authScreen.classList.add('hidden'); switchScreen('home-screen', document.querySelector('.nav-item.active'));
+    }
+
+    function initChart(p,a) { 
+        const canvas = document.getElementById('attendanceChart');
+        if(!canvas || canvas.offsetParent === null) return;
+        const ctx = canvas.getContext('2d'); 
+        if (attendanceChartInstance) attendanceChartInstance.destroy(); 
+        attendanceChartInstance = new Chart(ctx,{type:'doughnut',data:{labels:['P','A'],datasets:[{data:[p||1,a],backgroundColor:[p?'#2ecc71':'#eee','#e74c3c'],borderWidth:0}]},options:{cutout:'75%',plugins:{legend:false,tooltip:false},responsive:true,maintainAspectRatio:false}}); 
+    }
+
+    // Admin
     async function loadAdminDashboard() {
-        loadingOverlay.classList.remove('hidden'); authScreen.classList.add('hidden'); document.getElementById('admin-dashboard').classList.remove('hidden'); bottomNav.classList.add('hidden'); switchAdminTab('students');
+        loadingOverlay.classList.remove('hidden'); switchScreen('admin-dashboard'); switchAdminTab('students');
         db.ref('users').on('value', s => { const d=s.val(); allStudents=[]; if(d) Object.keys(d).forEach(k=>allStudents.push({id:k,...d[k]})); renderStudentList(allStudents); loadingOverlay.classList.add('hidden'); });
     }
-    function renderStudentList(l) { const c=document.getElementById('student-list'); c.innerHTML=''; l.forEach(s=>{ c.innerHTML+=`<div class="student-card" onclick='openEditScreen(${JSON.stringify(s)})'><div class="st-avatar"><img src="${s.profilePic||defaultProfileImg}"></div><div class="st-info"><div class="st-name">${s.name}</div><div class="st-details">${s.cadetNo} | ${s.class}</div></div></div>`; }); }
-    function filterStudents() { const q=document.getElementById('admin-search').value.toLowerCase(); renderStudentList(allStudents.filter(s=>s.name.toLowerCase().includes(q)||s.cadetNo.includes(q))); }
     
+    function renderStudentList(l) { 
+        const c=document.getElementById('student-list'); c.innerHTML=''; 
+        l.forEach(s=>{ c.innerHTML+=`<div class="student-card" onclick='openEditScreen(${JSON.stringify(s)})'><div class="st-avatar">${s.name.charAt(0)}</div><div class="st-info"><div class="st-name">${s.name}</div><div class="st-details">No: ${s.cadetNo} | ${s.entry?s.entry+'th Entry':'N/A'}</div></div></div>`; }); 
+    }
+    
+    function filterStudents() { 
+        const q=document.getElementById('admin-search').value.toLowerCase(); 
+        const entryVal = document.getElementById('entry-filter').value;
+        
+        const filtered = allStudents.filter(s => {
+            const matchesSearch = s.name.toLowerCase().includes(q) || s.cadetNo.includes(q);
+            const matchesEntry = entryVal === "All" || (s.entry && s.entry.includes(entryVal));
+            return matchesSearch && matchesEntry;
+        });
+        renderStudentList(filtered); 
+    }
+    
+    function switchAdminTab(tab) {
+        document.getElementById('tab-students').classList.remove('active'); document.getElementById('tab-complaints').classList.remove('active');
+        document.getElementById('student-list-container').classList.add('hidden'); document.getElementById('complaint-list-container').classList.add('hidden');
+        document.getElementById('admin-search-box').classList.add('hidden');
+        if(tab === 'students') { document.getElementById('tab-students').classList.add('active'); document.getElementById('student-list-container').classList.remove('hidden'); document.getElementById('admin-search-box').classList.remove('hidden'); }
+        else { document.getElementById('tab-complaints').classList.add('active'); document.getElementById('complaint-list-container').classList.remove('hidden'); loadComplaints(); }
+    }
+    function loadComplaints() { db.ref('complaints').once('value').then(snap => { const d = snap.val(); const l = document.getElementById('complaint-list'); l.innerHTML = ''; if(d) Object.keys(d).forEach(k => { const c = d[k]; l.innerHTML += `<div class="complaint-card"><div class="comp-header"><span class="comp-name">${c.name}</span></div><div class="comp-text">${c.text}</div><button class="resolve-btn" onclick="resolveComplaint('${k}')">Resolve</button></div>`; }); else l.innerHTML = '<p class="text-center">No complaints.</p>'; }); }
+    function resolveComplaint(id) { if(confirm("Delete?")) { db.ref('complaints/'+id).remove(); loadComplaints(); } }
+
     window.openEditScreen = function(s) {
-        document.getElementById('admin-dashboard').classList.add('hidden'); document.getElementById('admin-edit-screen').classList.remove('hidden');
-        document.getElementById('edit-header-name').innerText="Edit: "+s.name; document.getElementById('edit-uid').value=s.id;
-        document.getElementById('edit-name').value=s.name; document.getElementById('edit-cadet-no').value=s.cadetNo; document.getElementById('edit-class').value=s.class;
+        switchScreen('admin-edit-screen');
+        document.getElementById('edit-uid').value=s.id;
+        
+        // -- Profile Edit Fields --
+        document.getElementById('edit-name').value = s.name || "";
+        document.getElementById('edit-fname').value = s.fatherName || "";
+        document.getElementById('edit-cadet-no').value = s.cadetNo || "";
+        document.getElementById('edit-class').value = s.class || "";
+        document.getElementById('edit-section').value = s.section || "";
+        document.getElementById('edit-house').value = s.house || "";
+        document.getElementById('edit-entry').value = s.entry || "";
+        
         currentEditingImageBase64=s.profilePic||""; document.getElementById('admin-edit-img-preview').src=currentEditingImageBase64||defaultProfileImg;
-        document.getElementById('edit-present').value=s.attendance?s.attendance.present:0; document.getElementById('edit-absent').value=s.attendance?s.attendance.absent:0;
-        const m=s.marks||[]; const getM=sub=>{const f=m.find(x=>x.subject===sub);return f?f.achieved:0;};
-        document.getElementById('mark-eng').value=getM('English'); document.getElementById('mark-urdu').value=getM('Urdu'); document.getElementById('mark-math').value=getM('Math'); document.getElementById('mark-sci').value=getM('Science');
+
+        // -- Academic & Other Fields --
+        const ac = s.academics || {}; const pet = s.pet || {}; const act = s.activities || {}; const con = s.conduct || {}; const pen = s.pen || {}; const coun = s.counselling || [{},{},{}];
+        ['english','urdu','math','science'].forEach(sub => {
+            const m = ac[sub] || {}; let prefix = sub === 'english' ? 'eng' : (sub === 'science' ? 'sci' : sub); 
+            document.getElementById(`mk-${prefix}-m1`).value = m.m1 || ""; document.getElementById(`mk-${prefix}-m2`).value = m.m2 || ""; document.getElementById(`mk-${prefix}-s1`).value = m.s1 || "";
+        });
+        document.getElementById('edit-ac-remarks').value = ac.remarks || "";
+        document.getElementById('edit-pet-mile').value = pet.mile || ""; document.getElementById('edit-pet-pushups').value = pet.pushups || ""; document.getElementById('edit-pet-chinups').value = pet.chinups || ""; document.getElementById('edit-pet-situps').value = pet.situps || ""; document.getElementById('edit-pet-squats').value = pet.squats || "";
+        document.getElementById('edit-co-curr').value = act.co || ""; document.getElementById('edit-extra-curr').value = act.extra || ""; document.getElementById('edit-discipline').value = con.discipline || ""; document.getElementById('edit-appearance').value = con.appearance || "";
+        for(let i=0; i<3; i++) { let r = coun[i] || {}; document.getElementById(`coun-d${i+1}`).value = r.date || ""; document.getElementById(`coun-b${i+1}`).value = r.by || ""; document.getElementById(`coun-r${i+1}`).value = r.remarks || ""; }
+        document.getElementById('edit-pen-mentor').value = pen.mentor || ""; document.getElementById('edit-pen-teacher').value = pen.teacher || ""; document.getElementById('edit-pen-hm').value = pen.hm || ""; document.getElementById('edit-final-remarks').value = pen.final || "";
+        document.getElementById('edit-present').value = s.attendance?s.attendance.present:0; document.getElementById('edit-absent').value = s.attendance?s.attendance.absent:0;
     };
-    function closeEditScreen() { document.getElementById('admin-edit-screen').classList.add('hidden'); document.getElementById('admin-dashboard').classList.remove('hidden'); }
+
+    function closeEditScreen() { switchScreen('admin-dashboard'); }
+
     async function saveStudentData() {
-        const uid=document.getElementById('edit-uid').value, name=document.getElementById('edit-name').value, cNo=document.getElementById('edit-cadet-no').value, cls=document.getElementById('edit-class').value;
-        const p=document.getElementById('edit-present').value, a=document.getElementById('edit-absent').value;
-        const mE=document.getElementById('mark-eng').value, mU=document.getElementById('mark-urdu').value, mM=document.getElementById('mark-math').value, mS=document.getElementById('mark-sci').value;
-        const marks=[{subject:"English",marks:100,achieved:mE,perc:mE},{subject:"Urdu",marks:100,achieved:mU,perc:mU},{subject:"Math",marks:100,achieved:mM,perc:mM},{subject:"Science",marks:100,achieved:mS,perc:mS}];
-        loadingOverlay.classList.remove('hidden');
-        await db.ref('users/'+uid).update({name:name,cadetNo:cNo,class:cls,profilePic:currentEditingImageBase64,attendance:{present:p,absent:a},marks:marks});
+        const uid=document.getElementById('edit-uid').value; loadingOverlay.classList.remove('hidden');
+        
+        // Profile Data
+        const name = document.getElementById('edit-name').value;
+        const fname = document.getElementById('edit-fname').value;
+        const cNo = document.getElementById('edit-cadet-no').value;
+        const cls = document.getElementById('edit-class').value;
+        const sec = document.getElementById('edit-section').value;
+        const house = document.getElementById('edit-house').value;
+        const entry = document.getElementById('edit-entry').value;
+
+        // Existing Marks Logic
+        const ac = { remarks: document.getElementById('edit-ac-remarks').value };
+        ['english','urdu','math','science'].forEach(sub => {
+            let prefix = sub === 'english' ? 'eng' : (sub === 'science' ? 'sci' : sub);
+            ac[sub] = { m1: document.getElementById(`mk-${prefix}-m1`).value, m2: document.getElementById(`mk-${prefix}-m2`).value, s1: document.getElementById(`mk-${prefix}-s1`).value };
+        });
+        
+        const pet = { mile: document.getElementById('edit-pet-mile').value, pushups: document.getElementById('edit-pet-pushups').value, chinups: document.getElementById('edit-pet-chinups').value, situps: document.getElementById('edit-pet-situps').value, squats: document.getElementById('edit-pet-squats').value };
+        const act = { co: document.getElementById('edit-co-curr').value, extra: document.getElementById('edit-extra-curr').value };
+        const con = { discipline: document.getElementById('edit-discipline').value, appearance: document.getElementById('edit-appearance').value };
+        const coun = []; for(let i=1; i<=3; i++) { const d=document.getElementById(`coun-d${i}`).value, b=document.getElementById(`coun-b${i}`).value, r=document.getElementById(`coun-r${i}`).value; if(d||b||r) coun.push({date:d, by:b, remarks:r}); }
+        const pen = { mentor: document.getElementById('edit-pen-mentor').value, teacher: document.getElementById('edit-pen-teacher').value, hm: document.getElementById('edit-pen-hm').value, final: document.getElementById('edit-final-remarks').value };
+        const att = { present: document.getElementById('edit-present').value, absent: document.getElementById('edit-absent').value };
+
+        await db.ref('users/'+uid).update({ 
+            name: name, fatherName: fname, cadetNo: cNo, class: cls, section: sec, house: house, entry: entry,
+            academics: ac, pet: pet, activities: act, conduct: con, counselling: coun, pen: pen, attendance: att, profilePic:currentEditingImageBase64 
+        });
+        
         alert("Saved!"); closeEditScreen(); loadingOverlay.classList.add('hidden');
     }
+
+    function showForgotModal() { document.getElementById('forgot-modal').classList.remove('hidden'); }
+    function hideForgotModal() { document.getElementById('forgot-modal').classList.add('hidden'); }
+    function openComplaintScreen() { switchScreen('complaint-form-screen'); }
+    function openRoutineScreen() { switchScreen('routine-screen'); }
+    function submitComplaint() { 
+        const txt=document.getElementById('complaint-text').value; 
+        if(txt && currentUserData) { 
+            db.ref('complaints').push({userId:auth.currentUser.uid,name:currentUserData.name,cadetNo:currentUserData.cadetNo,text:txt,timestamp:new Date().toISOString()}); 
+            alert("Sent!"); switchScreen('home-screen'); 
+        } 
+    }
+    function triggerFileUpload() { document.getElementById('file-upload').click(); }
+    function handleImageUpload(i) { if(i.files[0]) { const r=new FileReader(); r.onload=e=>{ db.ref('users/'+auth.currentUser.uid).update({profilePic:e.target.result}); updateProfileImages(e.target.result); }; r.readAsDataURL(i.files[0]); } }
+    function triggerAdminFileUpload() { document.getElementById('admin-file-upload').click(); }
+    function handleAdminImageUpload(i) { if(i.files[0]) { const r=new FileReader(); r.onload=e=>{ currentEditingImageBase64=e.target.result; document.getElementById('admin-edit-img-preview').src=e.target.result; }; r.readAsDataURL(i.files[0]); } }
 
     if(auth) auth.onAuthStateChanged(u=>{ if(u && !isAdminMode && u.email.toLowerCase()!==ALLOWED_ADMIN_EMAIL.toLowerCase()) { loadingOverlay.classList.remove('hidden'); db.ref('users/'+u.uid).once('value').then(s=>{ loadUserData(s.val()); }).catch(()=>{ loadingOverlay.classList.add('hidden'); }); } });
 </script>
