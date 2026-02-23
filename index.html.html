@@ -20,6 +20,7 @@
             --primary-teal-dark: #16a085;
             --accent-red: #e74c3c;
             --admin-dark: #2c3e50;
+            --lib-purple: #8e44ad; /* New Color for Library */
             --bg-gray: #f4f7f6;
             --text-dark: #2c3e50;
             --text-light: #7f8c8d;
@@ -32,7 +33,7 @@
         #app-container { width: 100%; max-width: 414px; height: 100vh; max-height: 896px; background-color: var(--bg-gray); position: relative; overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
 
         /* Screens Layout */
-        #auth-screen, #home-screen, #results-screen, #profile-screen, #admin-dashboard, #admin-edit-screen, #complaint-form-screen, #routine-screen {
+        #auth-screen, #home-screen, #results-screen, #profile-screen, #admin-dashboard, #admin-edit-screen, #complaint-form-screen, #routine-screen, #fees-screen, #library-dashboard {
             height: 100%;
             overflow-y: auto; 
             padding-bottom: 90px; 
@@ -92,6 +93,24 @@
         .routine-time { font-weight: 600; color: var(--accent-red); min-width: 90px; }
         .routine-desc { color: var(--text-dark); text-align: right; flex: 1; }
 
+        /* Fees Screen Styles */
+        .fee-card {
+            background: linear-gradient(135deg, #1abc9c, #16a085);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 20px;
+            box-shadow: 0 5px 15px rgba(26, 188, 156, 0.3);
+            text-align: center;
+        }
+        .fee-amount { font-size: 2.2rem; font-weight: 800; margin: 10px 0; }
+        .fee-status { background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block; }
+        .fee-status.pending { background: rgba(231, 76, 60, 0.3); border: 1px solid #e74c3c; color: #ffebee; }
+        .bank-info-card { background: white; border-radius: 10px; padding: 15px; margin: 0 20px 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .bank-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; border-bottom: 1px solid #f4f4f4; padding-bottom: 5px; }
+        .bank-label { color: var(--text-light); }
+        .bank-val { font-weight: 600; color: var(--text-dark); }
+
         /* Notices */
         .notice-board { margin: 0 20px 20px; background: white; border-radius: 15px; padding: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .notice-item { display: flex; align-items: flex-start; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #f0f0f0; }
@@ -143,7 +162,7 @@
         .admin-tab { flex: 1; padding: 8px; border-radius: 8px; text-align: center; font-size: 0.8rem; cursor: pointer; border: 1px solid rgba(255,255,255,0.3); transition: all 0.3s; }
         .admin-tab.active { background: white; color: var(--admin-dark); font-weight: bold; }
         .student-list-container { padding: 10px 20px; padding-bottom: 80px; }
-        .student-card, .complaint-card { background: white; border-radius: 10px; padding: 15px; margin-bottom: 10px; display: flex; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.2s; }
+        .student-card, .complaint-card, .book-card { background: white; border-radius: 10px; padding: 15px; margin-bottom: 10px; display: flex; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.2s; }
         .complaint-card { flex-direction: column; align-items: flex-start; cursor: default; }
         .complaint-card .comp-header { display: flex; justify-content: space-between; width: 100%; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
         .complaint-card .comp-name { font-weight: bold; font-size: 0.9rem; color: var(--admin-dark); }
@@ -169,8 +188,14 @@
         .spinner { border: 4px solid #f3f3f3; border-top: 4px solid var(--primary-teal); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        /* ENTRY FILTER STYLE */
         #entry-filter { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; margin-top: 10px; background: white; color: var(--text-dark); font-size: 0.9rem; }
+
+        /* LIBRARY SPECIFIC */
+        .lib-header { background-color: var(--lib-purple); color: white; padding: 20px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
+        .book-card { border-left: 4px solid var(--lib-purple); display: flex; justify-content: space-between; }
+        .book-info h4 { font-size: 0.9rem; color: var(--text-dark); }
+        .book-info p { font-size: 0.75rem; color: var(--text-light); }
+        .book-return-btn { background: var(--lib-purple); color: white; border: none; padding: 5px 12px; border-radius: 5px; font-size: 0.75rem; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -204,6 +229,8 @@
             <div class="text-center mt-2"><span id="toggle-auth-text" style="color: #7f8c8d; font-size: 0.9rem;">Already have an account? <a href="#" onclick="toggleAuthMode()" style="color: var(--primary-teal); font-weight: bold;">Login</a></span></div>
             <div class="social-login"><div class="social-btn google"><i class="fab fa-google"></i></div><div class="social-btn fb"><i class="fab fa-facebook-f"></i></div></div>
             <div class="text-center"><div class="admin-link" onclick="toggleAdminMode()" id="admin-toggle-btn"><i class="fas fa-user-shield"></i> Admin Login</div></div>
+            <!-- LIBRARIAN LOGIN LINK -->
+            <div class="text-center" style="margin-top: 10px;"><div class="admin-link" onclick="toggleLibMode()" id="lib-toggle-btn" style="color: var(--lib-purple);"><i class="fas fa-book"></i> Librarian Login</div></div>
         </form>
     </div>
 
@@ -226,7 +253,8 @@
         <div class="categories-grid">
             <div class="cat-item"><div class="cat-icon"><i class="fas fa-book" style="color: #e67e22;"></i></div><div class="cat-text">Academics</div></div>
             <div class="cat-item" onclick="openRoutineScreen()"><div class="cat-icon"><i class="fas fa-sun" style="color: #f1c40f;"></i></div><div class="cat-text">Daily Routine</div></div>
-            <div class="cat-item"><div class="cat-icon"><i class="fas fa-file-invoice" style="color: #e74c3c;"></i></div><div class="cat-text">Fee Structure</div></div>
+            <!-- FEE BUTTON UPDATED -->
+            <div class="cat-item" onclick="openFeesScreen()"><div class="cat-icon"><i class="fas fa-file-invoice" style="color: #e74c3c;"></i></div><div class="cat-text">Fee Structure</div></div>
             <div class="cat-item" onclick="openComplaintScreen()"><div class="cat-icon"><i class="fas fa-exclamation-circle" style="color: #e74c3c;"></i></div><div class="cat-text">Complaints</div></div>
         </div>
 
@@ -303,6 +331,44 @@
         </div>
     </div>
 
+    <!-- NEW FEES SCREEN -->
+    <div id="fees-screen" class="hidden">
+        <div class="header-wave" style="padding-top: 20px;">
+            <div style="text-align: left; padding: 0 20px; font-size: 1.2rem; color: var(--text-dark);"><i class="fas fa-arrow-left" onclick="switchScreen('home-screen', document.querySelector('.nav-item.active'))"></i></div>
+            <div class="app-title" style="margin-top: 10px;">Fee Structure</div>
+        </div>
+        <div class="routine-container">
+            <!-- Current Status -->
+            <div class="fee-card">
+                <div style="opacity: 0.9; font-size: 0.9rem;">Current Dues</div>
+                <div class="fee-amount" id="fee-display-amount">Rs. 0</div>
+                <div class="fee-status" id="fee-display-status">Paid</div>
+                <div style="font-size: 0.75rem; margin-top: 10px; opacity: 0.8;">Please pay before 10th of this month</div>
+            </div>
+
+            <div class="section-title">Bank Details</div>
+            <div class="bank-info-card">
+                <div class="bank-row"><span class="bank-label">Bank Name</span><span class="bank-val">NBP Swat</span></div>
+                <div class="bank-row"><span class="bank-label">Account Title</span><span class="bank-val">Principal CCS</span></div>
+                <div class="bank-row" style="border: none;"><span class="bank-label">Account No</span><span class="bank-val">1234-567890</span></div>
+            </div>
+
+            <div class="section-title">Fee Breakdown</div>
+            <div class="report-section" style="margin: 0 20px;">
+                <table class="custom-table">
+                    <thead><tr><th class="left-align">Category</th><th>Amount</th></tr></thead>
+                    <tbody>
+                        <tr><td class="left-align">Tuition Fee</td><td>12,000</td></tr>
+                        <tr><td class="left-align">Messing</td><td>8,000</td></tr>
+                        <tr><td class="left-align">Laundry</td><td>1,500</td></tr>
+                        <tr><td class="left-align">Sports Fund</td><td>500</td></tr>
+                        <tr style="font-weight: bold; background: #f9f9f9;"><td class="left-align">Total</td><td>22,000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <!-- COMPLAINT FORM -->
     <div id="complaint-form-screen" class="hidden">
         <div class="header-wave" style="padding-top: 20px;">
@@ -312,6 +378,26 @@
         <div class="auth-form" style="margin-top: 20px;">
             <div class="input-group"><label>Your Complaint</label><textarea id="complaint-text" rows="8" placeholder="Please describe your issue here..." style="resize: none;"></textarea></div>
             <button onclick="submitComplaint()" class="btn-primary" style="background-color: var(--accent-red);">Submit Complaint</button>
+        </div>
+    </div>
+
+    <!-- LIBRARY DASHBOARD (NEW) -->
+    <div id="library-dashboard" class="hidden">
+        <div class="lib-header">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2>Library Panel</h2><button onclick="logout()" style="background:transparent; border:none; color:white;">Logout</button>
+            </div>
+            <p style="font-size:0.8rem; margin-top:5px; opacity:0.8;">Manage Issued Books</p>
+        </div>
+        <div class="auth-form">
+            <div class="input-group"><label>Cadet No</label><input type="text" id="lib-cadet-no" placeholder="1996"></div>
+            <div class="input-group"><label>Cadet Name</label><input type="text" id="lib-cadet-name" placeholder="Arez"></div>
+            <div class="input-group"><label>Book Title</label><input type="text" id="lib-book-title" placeholder="Physics 9th"></div>
+            <button onclick="issueBook()" class="btn-primary" style="background: var(--lib-purple);">Issue Book</button>
+        </div>
+        <div class="student-list-container">
+            <div class="section-title">Issued Books</div>
+            <div id="lib-issued-list"><p class="text-center" style="color:#aaa; margin-top:20px;">Loading...</p></div>
         </div>
     </div>
 
@@ -353,8 +439,19 @@
             <div class="input-group"><label>Father Name</label><input type="text" id="edit-fname"></div>
             <div class="small-inputs-row"><input type="text" id="edit-cadet-no" placeholder="Cadet No"><input type="text" id="edit-class" placeholder="Class"></div>
             <div class="small-inputs-row"><input type="text" id="edit-section" placeholder="Section"><input type="text" id="edit-house" placeholder="House"></div>
-            <!-- ENTRY INPUT -->
             <div class="input-group"><label>Entry (e.g. 17)</label><input type="text" id="edit-entry" placeholder="Enter Entry Number"></div>
+        </div>
+
+        <!-- FEE MANAGEMENT FOR ADMIN -->
+        <div class="edit-section">
+            <div class="edit-title">Fee Management</div>
+            <div class="input-group"><label>Current Dues (Amount)</label><input type="number" id="edit-fee-amount" placeholder="e.g. 22000"></div>
+            <div class="input-group"><label>Fee Status</label>
+                <select id="edit-fee-status" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                    <option value="Paid">Paid</option>
+                    <option value="Pending">Pending</option>
+                </select>
+            </div>
         </div>
 
         <!-- Academic Inputs -->
@@ -430,6 +527,8 @@
     let attendanceChartInstance = null;
 
     const ALLOWED_ADMIN_EMAIL = "adminccs@gmail.com";
+    const ALLOWED_LIBRARIAN_EMAIL = "libraryccs@gmail.com";
+    
     const firebaseConfig = {
       apiKey: "AIzaSyDk7FnXobMygc1Ub5dTasrhZaFB4VDw8nk",
       authDomain: "ccs-app-81a7e.firebaseapp.com",
@@ -448,7 +547,7 @@
         db = firebase.database();
     } catch (e) { console.error(e); }
 
-    let isSignup = true, isAdminMode = false, allStudents = [], currentUserData = null;
+    let isSignup = true, isAdminMode = false, isLibMode = false, allStudents = [], currentUserData = null;
     const defaultProfileImg = "https://via.placeholder.com/150/2C3E50/FFFFFF?text=Cadet";
     let currentEditingImageBase64 = "";
 
@@ -456,24 +555,36 @@
     const loadingOverlay = document.getElementById('loading-overlay');
 
     // Toggle logic
-    function toggleAuthMode() { if(isAdminMode)return; isSignup=!isSignup; updateAuthUI(); }
-    function toggleAdminMode() { isAdminMode=!isAdminMode; isSignup=!isAdminMode; updateAuthUI(); }
+    function toggleAuthMode() { if(isAdminMode || isLibMode)return; isSignup=!isSignup; updateAuthUI(); }
+    function toggleAdminMode() { isAdminMode=!isAdminMode; isLibMode=false; isSignup=!isAdminMode; updateAuthUI(); }
+    function toggleLibMode() { isLibMode=!isLibMode; isAdminMode=false; isSignup=!isLibMode; updateAuthUI(); }
+
     function updateAuthUI() {
-        const title=document.getElementById('auth-title'), btn=document.getElementById('auth-btn'), fields=document.getElementById('signup-fields'), toggle=document.getElementById('toggle-auth-text'), link=document.getElementById('forgot-link-ui'), adminBtn=document.getElementById('admin-toggle-btn');
-        if(isAdminMode) { title.innerText="Admin Login"; btn.innerText="Access Dashboard"; fields.classList.add('hidden'); toggle.classList.add('hidden'); link.classList.add('hidden'); adminBtn.innerHTML='Student Login'; btn.style.backgroundColor="var(--admin-dark)"; title.style.color="var(--admin-dark)"; }
+        const title=document.getElementById('auth-title'), btn=document.getElementById('auth-btn'), fields=document.getElementById('signup-fields'), toggle=document.getElementById('toggle-auth-text'), link=document.getElementById('forgot-link-ui'), adminBtn=document.getElementById('admin-toggle-btn'), libBtn=document.getElementById('lib-toggle-btn');
+        
+        // Reset Styles
+        adminBtn.style.display = "block";
+        libBtn.style.display = "block";
+
+        if(isAdminMode) { 
+            title.innerText="Admin Login"; btn.innerText="Access Dashboard"; fields.classList.add('hidden'); toggle.classList.add('hidden'); link.classList.add('hidden'); adminBtn.innerHTML='Student Login'; btn.style.backgroundColor="var(--admin-dark)"; title.style.color="var(--admin-dark)"; libBtn.style.display="none";
+        }
+        else if (isLibMode) {
+            title.innerText="Librarian Login"; btn.innerText="Access Library"; fields.classList.add('hidden'); toggle.classList.add('hidden'); link.classList.add('hidden'); libBtn.innerHTML='Student Login'; btn.style.backgroundColor="var(--lib-purple)"; title.style.color="var(--lib-purple)"; adminBtn.style.display="none";
+        }
         else {
-            adminBtn.innerHTML='Admin Login'; btn.style.backgroundColor=isSignup?"var(--primary-teal)":"var(--accent-red)"; title.style.color=isSignup?"var(--primary-teal)":"var(--accent-red)";
+            adminBtn.innerHTML='Admin Login'; libBtn.innerHTML='<i class="fas fa-book"></i> Librarian Login'; btn.style.backgroundColor=isSignup?"var(--primary-teal)":"var(--accent-red)"; title.style.color=isSignup?"var(--primary-teal)":"var(--accent-red)";
             if(isSignup) { fields.classList.remove('hidden'); link.classList.add('hidden'); title.innerText="Sign up"; btn.innerText="Sign Up"; toggle.innerHTML='Have account? <a href="#" onclick="toggleAuthMode()">Login</a>'; }
             else { fields.classList.add('hidden'); link.classList.remove('hidden'); title.innerText="Login"; btn.innerText="Login"; toggle.innerHTML='No account? <a href="#" onclick="toggleAuthMode()">Sign Up</a>'; }
         }
     }
 
     function switchScreen(id, el) {
-        ['home-screen','results-screen','profile-screen','admin-dashboard','admin-edit-screen','complaint-form-screen','routine-screen','auth-screen'].forEach(i=>document.getElementById(i).classList.add('hidden'));
+        ['home-screen','results-screen','profile-screen','admin-dashboard','admin-edit-screen','complaint-form-screen','routine-screen','fees-screen','library-dashboard','auth-screen'].forEach(i=>document.getElementById(i).classList.add('hidden'));
         document.getElementById(id).classList.remove('hidden');
         
         // Handle Bottom Nav Visibility
-        if(id === 'auth-screen') {
+        if(id === 'auth-screen' || id === 'library-dashboard') {
             bottomNav.classList.add('hidden');
         } else if(['home-screen','results-screen','profile-screen'].includes(id)) {
             bottomNav.classList.remove('hidden');
@@ -481,7 +592,7 @@
             bottomNav.classList.add('hidden');
         }
 
-        if(id!=='complaint-form-screen' && id!=='routine-screen' && id!=='auth-screen' && id!=='admin-dashboard' && id!=='admin-edit-screen'){ document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active')); if(el)el.classList.add('active'); }
+        if(id!=='complaint-form-screen' && id!=='routine-screen' && id!=='fees-screen' && id!=='auth-screen' && id!=='admin-dashboard' && id!=='admin-edit-screen' && id!=='library-dashboard'){ document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active')); if(el)el.classList.add('active'); }
         if(id==='home-screen') initChart();
     }
 
@@ -494,6 +605,10 @@
             if(isAdminMode) {
                 const u = await auth.signInWithEmailAndPassword(em, pw);
                 if(u.user.email.toLowerCase()===ALLOWED_ADMIN_EMAIL.toLowerCase()) loadAdminDashboard();
+                else { auth.signOut(); alert("Access Denied"); loadingOverlay.classList.add('hidden'); }
+            } else if (isLibMode) {
+                const u = await auth.signInWithEmailAndPassword(em, pw);
+                if(u.user.email.toLowerCase()===ALLOWED_LIBRARIAN_EMAIL.toLowerCase()) loadLibraryDashboard();
                 else { auth.signOut(); alert("Access Denied"); loadingOverlay.classList.add('hidden'); }
             } else {
                 if(isSignup) {
@@ -541,6 +656,13 @@
         // Attendance
         const p=d.attendance?parseInt(d.attendance.present):0, a=d.attendance?parseInt(d.attendance.absent):0; 
         if(document.getElementById('val-total')) { document.getElementById('val-total').innerText = p; document.getElementById('val-absent').innerText = a; initChart(p,a); }
+
+        // FEES DATA LOADING
+        const fees = d.fees || { amount: 0, status: "Paid" };
+        document.getElementById('fee-display-amount').innerText = "Rs. " + (fees.amount || 0);
+        const statusEl = document.getElementById('fee-display-status');
+        statusEl.innerText = fees.status || "Paid";
+        statusEl.className = "fee-status " + (fees.status === "Pending" ? "pending" : "");
 
         loadingOverlay.classList.add('hidden'); authScreen.classList.add('hidden'); switchScreen('home-screen', document.querySelector('.nav-item.active'));
     }
@@ -601,6 +723,11 @@
         
         currentEditingImageBase64=s.profilePic||""; document.getElementById('admin-edit-img-preview').src=currentEditingImageBase64||defaultProfileImg;
 
+        // -- Fees Edit Fields --
+        const fees = s.fees || { amount: 0, status: "Paid" };
+        document.getElementById('edit-fee-amount').value = fees.amount || 0;
+        document.getElementById('edit-fee-status').value = fees.status || "Paid";
+
         // -- Academic & Other Fields --
         const ac = s.academics || {}; const pet = s.pet || {}; const act = s.activities || {}; const con = s.conduct || {}; const pen = s.pen || {}; const coun = s.counselling || [{},{},{}];
         ['english','urdu','math','science'].forEach(sub => {
@@ -629,6 +756,12 @@
         const house = document.getElementById('edit-house').value;
         const entry = document.getElementById('edit-entry').value;
 
+        // Fees Data
+        const fees = {
+            amount: document.getElementById('edit-fee-amount').value,
+            status: document.getElementById('edit-fee-status').value
+        };
+
         // Existing Marks Logic
         const ac = { remarks: document.getElementById('edit-ac-remarks').value };
         ['english','urdu','math','science'].forEach(sub => {
@@ -645,16 +778,73 @@
 
         await db.ref('users/'+uid).update({ 
             name: name, fatherName: fname, cadetNo: cNo, class: cls, section: sec, house: house, entry: entry,
+            fees: fees,
             academics: ac, pet: pet, activities: act, conduct: con, counselling: coun, pen: pen, attendance: att, profilePic:currentEditingImageBase64 
         });
         
         alert("Saved!"); closeEditScreen(); loadingOverlay.classList.add('hidden');
     }
 
+    // --- LIBRARY FUNCTIONS ---
+    async function loadLibraryDashboard() {
+        loadingOverlay.classList.remove('hidden');
+        switchScreen('library-dashboard');
+        
+        db.ref('library_records').on('value', snap => {
+            const data = snap.val();
+            const list = document.getElementById('lib-issued-list');
+            list.innerHTML = "";
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    const r = data[key];
+                    list.innerHTML += `
+                    <div class="book-card">
+                        <div class="book-info">
+                            <h4>${r.bookTitle}</h4>
+                            <p>${r.cadetName} (${r.cadetNo})</p>
+                            <p style="font-size:0.65rem;">Issued: ${new Date(r.issueDate).toLocaleDateString()}</p>
+                        </div>
+                        <button class="book-return-btn" onclick="returnBook('${key}')">Return</button>
+                    </div>`;
+                });
+            } else {
+                list.innerHTML = '<p class="text-center" style="color:#aaa; margin-top:20px;">No books issued.</p>';
+            }
+            loadingOverlay.classList.add('hidden');
+        });
+    }
+
+    async function issueBook() {
+        const cNo = document.getElementById('lib-cadet-no').value;
+        const cName = document.getElementById('lib-cadet-name').value;
+        const bTitle = document.getElementById('lib-book-title').value;
+
+        if (!cNo || !cName || !bTitle) { alert("Please fill all fields"); return; }
+
+        await db.ref('library_records').push({
+            cadetNo: cNo,
+            cadetName: cName,
+            bookTitle: bTitle,
+            issueDate: new Date().toISOString()
+        });
+
+        alert("Book Issued!");
+        document.getElementById('lib-cadet-no').value = "";
+        document.getElementById('lib-cadet-name').value = "";
+        document.getElementById('lib-book-title').value = "";
+    }
+
+    async function returnBook(id) {
+        if(confirm("Mark book as returned?")) {
+            await db.ref('library_records/' + id).remove();
+        }
+    }
+
     function showForgotModal() { document.getElementById('forgot-modal').classList.remove('hidden'); }
     function hideForgotModal() { document.getElementById('forgot-modal').classList.add('hidden'); }
     function openComplaintScreen() { switchScreen('complaint-form-screen'); }
     function openRoutineScreen() { switchScreen('routine-screen'); }
+    function openFeesScreen() { switchScreen('fees-screen'); }
     function submitComplaint() { 
         const txt=document.getElementById('complaint-text').value; 
         if(txt && currentUserData) { 
@@ -667,7 +857,18 @@
     function triggerAdminFileUpload() { document.getElementById('admin-file-upload').click(); }
     function handleAdminImageUpload(i) { if(i.files[0]) { const r=new FileReader(); r.onload=e=>{ currentEditingImageBase64=e.target.result; document.getElementById('admin-edit-img-preview').src=e.target.result; }; r.readAsDataURL(i.files[0]); } }
 
-    if(auth) auth.onAuthStateChanged(u=>{ if(u && !isAdminMode && u.email.toLowerCase()!==ALLOWED_ADMIN_EMAIL.toLowerCase()) { loadingOverlay.classList.remove('hidden'); db.ref('users/'+u.uid).once('value').then(s=>{ loadUserData(s.val()); }).catch(()=>{ loadingOverlay.classList.add('hidden'); }); } });
+    if(auth) auth.onAuthStateChanged(u=>{ 
+        if(u) {
+            if (u.email.toLowerCase() === ALLOWED_ADMIN_EMAIL.toLowerCase()) {
+                if(!isAdminMode) { toggleAdminMode(); loadAdminDashboard(); }
+            } else if (u.email.toLowerCase() === ALLOWED_LIBRARIAN_EMAIL.toLowerCase()) {
+                if(!isLibMode) { toggleLibMode(); loadLibraryDashboard(); }
+            } else {
+                loadingOverlay.classList.remove('hidden'); 
+                db.ref('users/'+u.uid).once('value').then(s=>{ loadUserData(s.val()); }).catch(()=>{ loadingOverlay.classList.add('hidden'); }); 
+            }
+        }
+    });
 </script>
 </body>
 </html>
